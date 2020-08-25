@@ -3,7 +3,7 @@ package httpclient
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/liuhaoXD/go-httpclient/mimetype"
+	"github.com/HHHHHHRen/httpclient/mimetype"
 	"io"
 	"io/ioutil"
 	"log"
