@@ -33,8 +33,8 @@ func init(){
 					}).DialContext,
 					MaxIdleConns:        100,
 					MaxIdleConnsPerHost: 100,
-					MaxConnsPerHost:     50,
-					IdleConnTimeout:     120 * time.Second,
+					MaxConnsPerHost:     100,
+					IdleConnTimeout:     90 * time.Second,
 				},}
 		},
 		)
