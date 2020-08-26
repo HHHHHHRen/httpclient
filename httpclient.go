@@ -16,6 +16,22 @@ import (
 	"time"
 )
 
+var client *http.Client
+
+func init(){
+	client = &http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+			DialContext: (&net.Dialer{
+				Timeout:   1 * time.Second,
+				KeepAlive: 30 * time.Second,
+			}).DialContext,
+			MaxIdleConns:        100,
+			MaxIdleConnsPerHost: 8,
+			IdleConnTimeout:     120 * time.Second,
+		},}
+}
+
 // Builder is a object that help to build fluent style API.
 type Builder struct {
 	Url       string
@@ -105,17 +121,7 @@ func (b *Builder) Do() (*http.Response, error) {
 		return nil, err
 	}
 
-	client := &http.Client{Timeout: b.timeout,
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			DialContext: (&net.Dialer{
-				Timeout:   1 * time.Second,
-				KeepAlive: 30 * time.Second,
-			}).DialContext,
-			MaxIdleConns:        100,
-			MaxIdleConnsPerHost: 8,
-			IdleConnTimeout:     120 * time.Second,
-		},}
+	client.Timeout = b.timeout
 
 	request, err := b.newRequest()
 	if err != nil {
