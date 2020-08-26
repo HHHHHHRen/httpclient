@@ -32,8 +32,8 @@ func init(){
 						DualStack:true,
 					}).DialContext,
 					MaxIdleConns:        100,
-					MaxIdleConnsPerHost: 100,
-					MaxConnsPerHost:     100,
+					MaxIdleConnsPerHost: 20,
+					MaxConnsPerHost:     50,
 					IdleConnTimeout:     90 * time.Second,
 				},}
 		},
