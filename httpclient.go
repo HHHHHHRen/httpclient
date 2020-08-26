@@ -13,23 +13,30 @@ import (
 	"net/url"
 	"os"
 	"reflect"
+	"sync"
 	"time"
 )
 
 var client *http.Client
+var once sync.Once
 
 func init(){
-	client = &http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			DialContext: (&net.Dialer{
-				Timeout:   1 * time.Second,
-				KeepAlive: 30 * time.Second,
-			}).DialContext,
-			MaxIdleConns:        100,
-			MaxIdleConnsPerHost: 8,
-			IdleConnTimeout:     120 * time.Second,
-		},}
+	once.Do(
+		func() {
+			client = &http.Client{
+				Transport: &http.Transport{
+					Proxy: http.ProxyFromEnvironment,
+					DialContext: (&net.Dialer{
+						Timeout:   1 * time.Second,
+						KeepAlive: 30 * time.Second,
+					}).DialContext,
+					MaxIdleConns:        100,
+					MaxIdleConnsPerHost: 20,
+					IdleConnTimeout:     120 * time.Second,
+				},}
+		},
+		)
+
 }
 
 // Builder is a object that help to build fluent style API.
