@@ -29,9 +29,10 @@ func init(){
 					DialContext: (&net.Dialer{
 						Timeout:   1 * time.Second,
 						KeepAlive: 30 * time.Second,
+						DualStack:true,
 					}).DialContext,
 					MaxIdleConns:        100,
-					MaxIdleConnsPerHost: 20,
+					MaxIdleConnsPerHost: 100,
 					MaxConnsPerHost:     50,
 					IdleConnTimeout:     120 * time.Second,
 				},}
