@@ -31,9 +31,9 @@ func init(){
 						KeepAlive: 30 * time.Second,
 						DualStack:true,
 					}).DialContext,
-					MaxIdleConns:        100,
-					MaxIdleConnsPerHost: 20,
-					MaxConnsPerHost:     50,
+					MaxIdleConns:        200,
+					MaxIdleConnsPerHost: 50,
+					MaxConnsPerHost:     100,
 					IdleConnTimeout:     90 * time.Second,
 				},}
 		},
