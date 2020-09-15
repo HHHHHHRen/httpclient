@@ -3,6 +3,8 @@ package httpclient
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/HHHHHHRen/httpclient/mimetype"
 	"io"
 	"io/ioutil"
@@ -17,7 +19,9 @@ func (b *Builder) UnmarshalJson(v interface{}) (*http.Response, error) {
 	}
 	body, _ := ioutil.ReadAll(resp.Body)
 	resp.Body = ioutil.NopCloser(bytes.NewBuffer(body))
-
+	if body == nil{
+		return nil, errors.New(fmt.Sprintf("url : %v ,response body is nil",b.Url))
+	}
 	err = json.Unmarshal(body, v)
 	return resp, err
 }
